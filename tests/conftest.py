@@ -9,47 +9,43 @@ https://docs.pytest.org/en/latest/fixture.html.
 """
 
 import json
-from typing import Any, Dict, List
+from typing import Any, Dict
 
 import pytest
 
-from py_pkg.curves import SupplyCurve, DemandCurve
-
-
-def load_test_data() -> List[Dict[str, Any]]:
+def load_test_data() -> Dict[str, Any]:
     """Load test data from JSON file.
 
     :return: Test data.
     :rtype: Dict[str, Any]
     """
 
-    config_file_path = 'tests/test_data/supply_demand_data.json'
+    config_file_path = 'tests/test_data/test_files.json'
     with open(config_file_path) as file:
         json_data = file.read()
 
     data = json.loads(json_data)
-    return data['supply_demand']
+    return data['files']
 
 
 @pytest.fixture
-def supply_curve() -> SupplyCurve:
-    """Return a supply curve for use with tests.
+def text_file() -> str:
+    """Return the path for a text file for use with tests.
 
-    :return: A Supply curve.
-    :rtype: SupplyCurve
+    :return: A string.
+    :rtype: str
     """
 
-    supply_demand_data = load_test_data()
-    return SupplyCurve(supply_demand_data)
-
+    files = load_test_data()
+    return files['text']
 
 @pytest.fixture
-def demand_curve() -> DemandCurve:
-    """Return a demand curve for use with tests.
+def bin_file() -> str:
+    """Return the path for a bin file for use with tests.
 
-    :return: A demand curve.
-    :rtype: DemandCurve
+    :return: A string.
+    :rtype: str
     """
 
-    supply_demand_data = load_test_data()
-    return DemandCurve(supply_demand_data)
+    files = load_test_data()
+    return files['bin']

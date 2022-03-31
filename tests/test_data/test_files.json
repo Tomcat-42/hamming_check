@@ -1,0 +1,6 @@
+{
+  "files": {
+    "text": "tests/test_data/files/file01.txt",
+    "bin": "tests/test_data/files/file02.bin"
+  }
+}
