@@ -40,6 +40,80 @@ def text_file() -> str:
     return files['text']
 
 @pytest.fixture
+def text_file_single_byte() -> list[bytes]:
+    """Return the bytes that match the text file content
+
+    :return: A bytestring.
+    :rtype: list[bytes]
+    """
+
+    return [b't', b'e', b's', b't', b'e',b'\n']
+
+@pytest.fixture
+def text_file_four_bytes() -> list[bytes]:
+    """Return the bytes that match the text file content
+
+    :return: A bytestring.
+    :rtype: list[bytes]
+    """
+
+    return [b'test', b'e\n']
+
+@pytest.fixture
+def bytes_single_byte() -> bytes:
+    """Return a single byte
+
+    :return: A bytestring.
+    :rtype: bytes
+    """
+
+    # 0b01100001
+    return b'a'
+
+@pytest.fixture
+def bytes_single_byte_bits() -> list[int]:
+    """Return a single byte in bits
+
+    :return: A list of integers, 0 or 1.
+    :rtype: list[int]
+    """
+
+    # 0b01100001
+    return [
+        1, 0, 0, 0, 0, 1, 1, 0,
+    ]
+
+@pytest.fixture
+def bytes_three_bytes() -> bytes:
+    """Return a single byte
+
+    :return: A bytestring.
+    :rtype: str
+    """
+
+    # 0b01100001
+    # 0b01100010
+    # 0b01100011
+    return b'abc'
+
+@pytest.fixture
+def bytes_three_bytes_bits() -> list[int]:
+    """Return three byte in bits
+
+    :return: A list of integers, 0 or 1.
+    :rtype: list[int]
+    """
+
+    # 0b01100001
+    # 0b01100010
+    # 0b01100011
+    return [ 
+        1, 0, 0, 0, 0, 1, 1, 0,
+        0, 1, 0, 0, 0, 1, 1, 0,
+        1, 1, 0, 0, 0, 1, 1, 0,
+    ] 
+
+@pytest.fixture
 def bin_file() -> str:
     """Return the path for a bin file for use with tests.
 
