@@ -80,7 +80,7 @@ def bytes_single_byte_bits() -> list[int]:
 
     # 0b01100001
     return [
-        1, 0, 0, 0, 0, 1, 1, 0,
+        0, 1, 1, 0, 0, 0, 0, 1,
     ]
 
 @pytest.fixture
@@ -108,10 +108,82 @@ def bytes_three_bytes_bits() -> list[int]:
     # 0b01100010
     # 0b01100011
     return [ 
+        0, 1, 1, 0, 0, 0, 0, 1,
+        0, 1, 1, 0, 0, 0, 1, 0,
+        0, 1, 1, 0, 0, 0, 1, 1
+    ] 
+
+@pytest.fixture
+def bytes_three_bytes_bits_little_endian() -> list[int]:
+    """Return three byte in bits
+
+    :return: A list of integers, 0 or 1.
+    :rtype: list[int]
+    """
+
+    # 0b01100001
+    # 0b01100010
+    # 0b01100011
+    return [
         1, 0, 0, 0, 0, 1, 1, 0,
         0, 1, 0, 0, 0, 1, 1, 0,
-        1, 1, 0, 0, 0, 1, 1, 0,
-    ] 
+        1, 1, 0, 0, 0, 1, 1, 0
+    ]
+
+@pytest.fixture
+def t_bytes() -> bytes:
+
+    return b't'
+
+@pytest.fixture
+def t_bits() -> list[int]:
+    """Return a list of integers, 0 or 1.
+
+    :return: A list of integers, 0 or 1.
+    :rtype: list[int]
+    """
+
+    return [
+        0, 0, 1, 0, 1, 1, 1, 0
+    ]
+
+
+@pytest.fixture
+def t_hammified() -> list[int]:
+    """Return a list of integers, 0 or 1.
+
+    :return: A list of integers, 0 or 1.
+    :rtype: list[int]
+    """
+
+    return [
+        1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 0, 0, 0, 0
+    ]
+
+@pytest.fixture
+def t_hammified_bit4_flipped() -> list[int]:
+    """Return a list of integers, 0 or 1.
+
+    :return: A list of integers, 0 or 1.
+    :rtype: list[int]
+    """
+
+    return [
+        1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0
+    ]
+
+@pytest.fixture
+def t_hammified_bit4_bit11_flipped() -> list[int]:
+    """Return a list of integers, 0 or 1.
+
+    :return: A list of integers, 0 or 1.
+    :rtype: list[int]
+    """
+
+    return [
+        1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0
+    ]
+
 
 @pytest.fixture
 def bin_file() -> str:
