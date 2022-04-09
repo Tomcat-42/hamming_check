@@ -1,10 +1,9 @@
 from enum import Enum
 from math import log2
 
-from hamming_check.hamming.DecodeResult import DecodeResult
-from hamming_check.hamming.DecodeStatus import DecodeStatus
-from hamming_check.input.Bytes import Bytes
-from hamming_check.utils.Utils import Utils
+from hamming_check.hamming import DecodeResult, DecodeStatus
+from hamming_check.io import Bytes
+from hamming_check.utils import Utils
 
 
 class Hamming(object):

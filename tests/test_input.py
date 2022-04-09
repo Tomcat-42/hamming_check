@@ -9,13 +9,10 @@ from copy import deepcopy
 
 import pytest
 
-from hamming_check.hamming.DecodeResult import DecodeResult
-from hamming_check.hamming.DecodeStatus import DecodeStatus
-from hamming_check.hamming.Hamming import Hamming
-from hamming_check.input.Bytes import Bytes
-from hamming_check.input.BytesBitIterator import BytesBitIterator
-from hamming_check.input.File import File
-from hamming_check.input.FileByteIterator import FileByteIterator
+from hamming_check.hamming import DecodeResult, DecodeStatus, Hamming
+from hamming_check.io import Bytes, File
+from hamming_check.io._bytes_bit_iterator import _BytesBitIterator
+from hamming_check.io._file_byte_iterator import _FileByteIterator
 
 
 class TestInput:
@@ -25,7 +22,7 @@ class TestInput:
             self, text_file: str, text_file_single_byte: list[bytes]):
         """Test FileInput class."""
 
-        bytes_iterator = FileByteIterator(text_file)
+        bytes_iterator = _FileByteIterator(text_file)
         bytes_generated = [i for i in bytes_iterator]
 
         assert bytes_generated == text_file_single_byte
@@ -34,7 +31,7 @@ class TestInput:
                                             text_file_four_bytes: list[bytes]):
         """Test FileInput class."""
 
-        bytes_iterator = FileByteIterator(text_file, bytes_per_read=4)
+        bytes_iterator = _FileByteIterator(text_file, bytes_per_read=4)
         bytes_generated = [i for i in bytes_iterator]
 
         assert bytes_generated == text_file_four_bytes
@@ -43,7 +40,7 @@ class TestInput:
                                             bytes_single_byte_bits: list[int]):
         """Test FileInput class."""
 
-        bits_iterator = BytesBitIterator(bytes_single_byte)
+        bits_iterator = _BytesBitIterator(bytes_single_byte)
         bits_generated = [i for i in bits_iterator]
 
         assert bits_generated == bytes_single_byte_bits
@@ -52,7 +49,7 @@ class TestInput:
                                             bytes_three_bytes_bits: list[int]):
         """Test FileInput class."""
 
-        bits_iterator = BytesBitIterator(bytes_three_bytes)
+        bits_iterator = _BytesBitIterator(bytes_three_bytes)
         bits_generated = [i for i in bits_iterator]
 
         assert bits_generated == bytes_three_bytes_bits
@@ -62,7 +59,7 @@ class TestInput:
             bytes_three_bytes_bits_little_endian: list[int]):
         """Test FileInput class."""
 
-        bits_iterator = BytesBitIterator(bytes_three_bytes, endian="little")
+        bits_iterator = _BytesBitIterator(bytes_three_bytes, endian="little")
         bits_generated = [i for i in bits_iterator]
 
         assert bits_generated == bytes_three_bytes_bits_little_endian
@@ -73,7 +70,7 @@ class TestInput:
         """Test FileInput class."""
         file = File(text_file)
 
-        bytes_iterator = file.get_bytes()
+        bytes_iterator = file
         bytes_generated = [i for i in bytes_iterator]
 
         assert bytes_generated == text_file_single_byte
@@ -84,7 +81,7 @@ class TestInput:
 
         file = File(text_file, bytes_per_read=4)
 
-        bytes_iterator = file.get_bytes()
+        bytes_iterator = file
         bytes_generated = [i for i in bytes_iterator]
 
         assert bytes_generated == text_file_four_bytes
@@ -94,7 +91,7 @@ class TestInput:
 
         file = File(text_file, bytes_per_read=1)
 
-        bytes_iterator = file.get_bytes()
+        bytes_iterator = file
         bytes_generated = [i for i in bytes_iterator]
 
         bytes = Bytes()

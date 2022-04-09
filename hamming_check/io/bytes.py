@@ -1,9 +1,11 @@
+from __future__ import annotations
+
 from typing import Any, Callable, Iterable, Union
 
 from bitarray import bitarray
 from bitarray.util import parity, zeros
 
-from hamming_check.input.BytesBitIterator import BytesBitIterator
+from ._bytes_bit_iterator import _BytesBitIterator
 
 
 class Bytes(bitarray):
@@ -15,7 +17,7 @@ class Bytes(bitarray):
     def __init__(self, *args, **kwargs) -> None:
         super().__init_subclass__().__init__(*args, **kwargs)
 
-    def from_size(self, size: int = 0) -> "Bytes":
+    def from_size(self, size: int = 0) -> Bytes:
         """
         Create a Bytes object of a given size
         """
@@ -23,7 +25,7 @@ class Bytes(bitarray):
         self.extend(zeros(size))
         return self
 
-    def from_bytes(self, bytes: bytes) -> "Bytes":
+    def from_bytes(self, bytes: bytes) -> Bytes:
         """
         Create a Bytes object from a bytes object
         """
@@ -31,7 +33,7 @@ class Bytes(bitarray):
         self.frombytes(bytes)
         return self
 
-    def get_bits_if_index(self, f_x: Callable[[int], bool]) -> "Bytes":
+    def get_bits_if_index(self, f_x: Callable[[int], bool]) -> Bytes:
         """
         Return a Bytes object with only the bits that his index satisfy the predicate
         """
@@ -39,7 +41,7 @@ class Bytes(bitarray):
 
     def set_bits_if_index(self,
                           f_x: Callable[[int], int],
-                          value: int = 1) -> "Bytes":
+                          value: int = 1) -> Bytes:
         """
         Set the bits that his index satisfy the predicate
         """
@@ -49,7 +51,7 @@ class Bytes(bitarray):
 
         return self
 
-    def flip_bits_if_index(self, f_x: Callable[[int], int]) -> "Bytes":
+    def flip_bits_if_index(self, f_x: Callable[[int], int]) -> Bytes:
         """
         Flip the bits that his index satisfy the predicate
         """
@@ -66,4 +68,4 @@ class Bytes(bitarray):
         return parity(self)
 
     def get_bits(self) -> Iterable[int]:
-        return BytesBitIterator(self.tobytes(), endian=self.endian())
+        return _BytesBitIterator(self.tobytes(), endian=self.endian())

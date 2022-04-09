@@ -4,10 +4,8 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-numpy = "*"
-requests = "*"
-twine = "*"
 bitarray = "*"
+twine = "*"
 
 [dev-packages]
 "flake8" = "*"
