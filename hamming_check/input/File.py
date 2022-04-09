@@ -9,7 +9,7 @@ class File(object):
         self.__file_name = file_name
         self.__bytes_per_read = bytes_per_read
         self.__bytes_iterator = FileByteIterator(self.__file_name, self.__bytes_per_read)
- 
+
     def set_bytes_per_read(self, bytes_per_read: int) -> None:
         self.close()
         self.__bytes_iterator = FileByteIterator(self.__file_name, bytes_per_read)
