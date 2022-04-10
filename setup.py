@@ -32,7 +32,10 @@ setup(
     license=about["__license__"],
     zip_safe=False,
     entry_points={
-        "console_scripts": ["hamming_check=hamming_check.entry_points:cli"],
+        "console_scripts": [
+            "hamming_check=hamming_check.entry_points:cli",
+            "hamming_flip=hamming_check.entry_points:flip_a_bit_in_file",
+        ],
     },
     classifiers=[
         "Development Status :: 4 - Beta",

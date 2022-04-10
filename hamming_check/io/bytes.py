@@ -69,3 +69,13 @@ class Bytes(bitarray):
 
     def get_bits(self) -> Iterable[int]:
         return _BytesBitIterator(self.tobytes(), endian=self.endian())
+
+    def pad_to_size(self, size: int) -> Bytes:
+        """
+        Pad the Bytes object to a given size
+        """
+        self.extend(zeros(size - len(self)))
+        return self
+
+    def __str__(self) -> str:
+        return self.to01()

@@ -7,21 +7,14 @@ class _FileByteIterator(object):
     Reads the file and returns a iterator over the bytes
     """
 
-    def __init__(self, file_name: str, bytes_per_read: int = 1):
-        self._file_name = file_name
+    def __init__(self,
+                 file_descriptor: BufferedReader,
+                 bytes_per_read: int = 1):
+        self._file_descriptor = file_descriptor
         self._bytes_per_read = bytes_per_read
-        self._file = None
-        self._open()
-
-    def _open(self) -> BufferedReader:
-        self._file = open(self._file_name, "rb")
-        return self._file
 
     def _is_closed(self) -> bool:
         return self._file.closed
-
-    def _close(self) -> None:
-        self._file.close()
 
     # Iterator implementation,
     # For reading bytes on Demand
@@ -29,15 +22,12 @@ class _FileByteIterator(object):
     def __iter__(self) -> Iterator[bytes]:
         return self
 
-    def __next__(self) -> bytes:
-        if self._is_closed():
-            self._open()
+    def __next__(self) -> bytearray:
 
-        self.byte = self._file.read(self._bytes_per_read)
+        self.byte = self._file_descriptor.read(self._bytes_per_read)
         if self.byte:
             return bytes(self.byte)
         else:
-            self._close()
             raise StopIteration
 
     # Generator implementation
@@ -47,8 +37,6 @@ class _FileByteIterator(object):
     def _get_all_bytes(self,
                        bytes_per_read: int = 1
                        ) -> Generator[bytes, None, None]:
-        if self._is_closed():
-            self._open()
 
         __curr_byte = 0
         while __curr_byte := self._file.read(bytes_per_read):

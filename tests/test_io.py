@@ -19,8 +19,9 @@ class TestBytes:
             self, text_file: str, text_file_single_byte: list[bytes]):
         """Test FileInput class."""
 
-        bytes_iterator = _FileByteIterator(text_file)
-        bytes_generated = [i for i in bytes_iterator]
+        with open(text_file, "rb") as f:
+            file_iterator = _FileByteIterator(f)
+            bytes_generated = [i for i in file_iterator]
 
         assert bytes_generated == text_file_single_byte
 
@@ -28,8 +29,9 @@ class TestBytes:
                                             text_file_four_bytes: list[bytes]):
         """Test FileInput class."""
 
-        bytes_iterator = _FileByteIterator(text_file, bytes_per_read=4)
-        bytes_generated = [i for i in bytes_iterator]
+        with open(text_file, "rb") as f:
+            bytes_iterator = _FileByteIterator(f, bytes_per_read=4)
+            bytes_generated = [i for i in bytes_iterator]
 
         assert bytes_generated == text_file_four_bytes
 
@@ -71,31 +73,34 @@ class TestFile:
     def test_file_single_byte(self, text_file: str,
                               text_file_single_byte: list[bytes]):
         """Test FileInput class."""
-        file = File(text_file)
 
-        bytes_iterator = file
-        bytes_generated = [i for i in bytes_iterator]
+        with open(text_file, "rb") as f:
+            file = File(f, bytes_per_read=1)
+
+            bytes_iterator = file
+            bytes_generated = [i for i in bytes_iterator]
 
         assert bytes_generated == text_file_single_byte
 
     def test_file_four_bytes(self, text_file: str,
                              text_file_four_bytes: list[bytes]):
         """Test FileInput class."""
+        with open(text_file, "rb") as f:
+            file = File(f, bytes_per_read=4)
 
-        file = File(text_file, bytes_per_read=4)
-
-        bytes_iterator = file
-        bytes_generated = [i for i in bytes_iterator]
+            bytes_iterator = file
+            bytes_generated = [i for i in bytes_iterator]
 
         assert bytes_generated == text_file_four_bytes
 
     def test_bytes(self, text_file: str, text_file_single_byte: list[bytes]):
         """Test FileInput class."""
 
-        file = File(text_file, bytes_per_read=1)
+        with open(text_file, "rb") as f:
+            file = File(f, bytes_per_read=1)
 
-        bytes_iterator = file
-        bytes_generated = [i for i in bytes_iterator]
+            bytes_iterator = file
+            bytes_generated = [i for i in bytes_iterator]
 
         bytes = Bytes()
         bytes.frombytes(bytes_generated[0])
