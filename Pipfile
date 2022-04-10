@@ -6,6 +6,8 @@ name = "pypi"
 [packages]
 bitarray = "*"
 twine = "*"
+hamming-check = {editable = true, path = "."}
+argparse = "*"
 
 [dev-packages]
 "flake8" = "*"
@@ -14,6 +16,7 @@ ipython = "*"
 mypy = "*"
 sphinx = "*"
 sphinx-rtd-theme = "*"
+stubs = "*"
 
 [requires]
 python_version = "3.10"

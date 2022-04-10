@@ -13,6 +13,10 @@ from typing import Any, Dict
 
 import pytest
 
+###############################################################################
+# File Fixtures
+###############################################################################
+
 def load_test_data() -> Dict[str, Any]:
     """Load test data from JSON file.
 
@@ -39,6 +43,10 @@ def text_file() -> str:
     files = load_test_data()
     return files['text']
 
+###############################################################################
+# File Bytes Fixtures
+###############################################################################
+
 @pytest.fixture
 def text_file_single_byte() -> list[bytes]:
     """Return the bytes that match the text file content
@@ -58,6 +66,10 @@ def text_file_four_bytes() -> list[bytes]:
     """
 
     return [b'test', b'e\n']
+
+###############################################################################
+# Bytes Fixtures
+###############################################################################
 
 @pytest.fixture
 def bytes_single_byte() -> bytes:
@@ -147,6 +159,9 @@ def t_bits() -> list[int]:
         0, 0, 1, 0, 1, 1, 1, 0
     ]
 
+###############################################################################
+# Hamming Fixtures
+###############################################################################
 
 @pytest.fixture
 def t_hammified() -> list[int]:
@@ -195,3 +210,36 @@ def bin_file() -> str:
 
     files = load_test_data()
     return files['bin']
+
+###############################################################################
+# Utils Fixtures
+###############################################################################
+@pytest.fixture
+def power_of_two() -> int:
+    """Return a power of two.
+
+    :return: A power of two.
+    :rtype: int
+    """
+
+    return 2**10
+
+@pytest.fixture
+def non_power_of_two() -> int:
+    """Return a non-power of two.
+
+    :return: A non-power of two.
+    :rtype: int
+    """
+
+    return 2**10 + 1
+
+@pytest.fixture
+def non_power_of_two_zero() -> int:
+    """Return a non-power of two (zero)
+
+    :return: A non-power of two.
+    :rtype: int
+    """
+
+    return 0
