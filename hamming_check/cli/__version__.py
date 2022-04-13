@@ -1,12 +1,12 @@
 """
-utils
+cli
 ~~~~~~~~~~~~~~
 
-Information about the version of the package.
+Command line interface for the application.
 """
 
-__title__ = 'utils'
-__description__ = 'utils module'
+__title__ = 'cli'
+__description__ = 'cli module'
 __version__ = '0.1.0'
 __author__ = 'Pablo Alessandro Santos Hugen'
 __author_email__ = 'Pablo Alessandro Santos Hugen'

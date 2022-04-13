@@ -12,12 +12,19 @@ from sys import argv
 from hamming_check.cli import Cli
 
 
-def cli() -> None:
+def cli() -> int:
     """Main package cli entry point.
 
     Delegates to other functions based on user input.
     """
-    Cli().run()
+    cmd_line = Cli()
+    result = 0
+    try:
+        result = cmd_line.run()
+    except KeyboardInterrupt:
+        print("\nExiting...")
+
+    return result
 
 
 def flip_a_bit_in_file() -> None:
@@ -52,3 +59,4 @@ def flip_a_bit_in_file() -> None:
     fp.seek(-1, 1)
     fp.write(toggled)
     fp.close()
+    print(f"Flipped bit {bitpos} in {fname}")

@@ -1,4 +1,4 @@
-import builtins
+import builtins as exceptions
 from argparse import ArgumentParser, FileType
 from copy import Error
 from sys import stderr, stdin, stdout
@@ -41,7 +41,7 @@ class Cli(object):
             "data is written to stdout.",
         )
 
-        group = self.parser.add_mutually_exclusive_group()
+        group = self.parser.add_mutually_exclusive_group(required=True)
         group.add_argument(
             "-e",
             "--encode",
@@ -75,47 +75,55 @@ class Cli(object):
         self.hamming = Hamming(self.args.buffer_size, self.args.verbose)
         self.number_of_output_bytes = self.hamming.get_number_of_output_bytes()
 
-    def run(self) -> None:
+    def run(self) -> int:
         """
         Run the command line interface.
-        :return: None.
+        :return: int.
         """
-        if self.args.decode:
-            self.decode()
-        else:
-            self.encode()
+        return self.decode() if self.args.decode else self.encode()
 
     def encode(self) -> None:
         """
         Encode the input stream to the output stream.
         :return: None.
         """
-        try:
-            input_file = File(self.args.input_file, self.args.buffer_size)
-            output_file = File(self.args.output_file)
+        exit_value = 0
 
+        input_file = File(self.args.input_file, self.args.buffer_size)
+        output_file = File(self.args.output_file)
+
+        try:
             for (index, data) in enumerate(input_file):
                 encoded_data = self.hamming.encode(data)
                 if self.args.verbose >= VerbosityTypes.DECODE_ENCODE_RESULTS:
                     print(f"{index}: Encoded {data} -> {encoded_data}")
                 output_file.write(encoded_data)
+        except KeyboardInterrupt as e:
+            print(f"\n\nBye!")
         except FileReadError as e:
-            stderr.write(f"Error Reading file!\n\n{e}\n")
+            stderr.write(f"Error Reading file!\n")
+            exit_value = 1
         except FileWriteError as e:
-            stderr.write(f"Error Writing file!\n\n{e}\n")
-        except Exception as e:
-            stderr.write(f"Error encoding data!\n\n{e}\n")
+            stderr.write(f"Error Writing file!\n")
+            exit_value = 1
+        except KeyboardInterrupt:
+            print("\nInterrupted by user, bye!")
+        except Error:
+            stderr.write(f"Error encoding data!\nCheck the --buffer-size "
+                         f"option and the i/o files!\n")
+            exit_value = 1
         finally:
             self.args.input_file.close()
             self.args.output_file.close()
 
-        return
+        return exit_value
 
     def decode(self) -> None:
         """
         Decode the input stream to the output stream.
         :return: None.
         """
+        exit_value = 0
         try:
             input_file = File(self.args.input_file,
                               self.number_of_output_bytes)
@@ -139,16 +147,15 @@ class Cli(object):
                         decoded_result == DecodeStatus.DOUBLE_ERROR_DETECTED):
                     print(f"{index}: Decoded {data} -> {decoded_data}, "
                           f"Double Error Detected")
+                    exit_value = 2
 
                 output_file.write(decoded_data)
-        except FileReadError as e:
-            stderr.write(f"Error Reading file!\n\n{e}\n")
-        except FileWriteError as e:
-            stderr.write(f"Error Writing file!\n\n{e}\n")
-        except Exception as e:
-            stderr.write(f"Error decoding data!\n\n{e}\n")
+        except Error:
+            stderr.write(f"Error decoding data!\nCheck the --buffer-size "
+                         f"option and the i/o files!\n")
+            exit_value = 1
         finally:
             self.args.input_file.close()
             self.args.output_file.close()
 
-        return
+        return exit_value
