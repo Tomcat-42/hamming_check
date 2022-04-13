@@ -2,7 +2,7 @@
 
 import os
 
-from setuptools import setup
+from setuptools import find_packages, setup
 
 # get key package details from py_pkg/__version__.py
 about = {}  # type: ignore
@@ -25,7 +25,7 @@ setup(
     author=about["__author__"],
     author_email=about["__author_email__"],
     url=about["__url__"],
-    packages=["hamming_check"],
+        packages=find_packages(exclude=("tests", )),
     include_package_data=True,
     python_requires=">=3.7.*",
     install_requires=["bitarray"],

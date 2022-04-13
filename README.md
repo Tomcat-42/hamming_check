@@ -9,6 +9,29 @@ is moved or stored from the sender to the receiver. It is technique developed by
 
 You can find more about it on his [Wikipedia Article](https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&cad=rja&uact=8&ved=2ahUKEwjvkdeftJD3AhV_rpUCHRZBCS4QFnoECBIQAQ&url=https%3A%2F%2Fen.wikipedia.org%2Fwiki%2FHamming_code&usg=AOvVaw1bgDIw5XksNiMYziP2VeeQ), [MSU notes](https://users.math.msu.edu/users/halljo/classes/codenotes/Hamming.pdf) and in the awesome videos by [3Blue1Brown](https://www.youtube.com/c/3blue1brown): [Hamming pt1](https://www.youtube.com/watch?v=X8jsijhllIA) and [Hamming pt2](https://www.youtube.com/watch?v=b3NxrZOu_CE).
 
+## Installing
+
+### Locally
+
+Clone the repo.
+
+```bash
+git clone git@github.com:Tomcat-42/hamming_check.git
+```
+
+Run `setup.py`
+```bash
+sudo python setup.py install
+```
+
+### Using pip
+
+[`hamming_check`](https://pypi.org/project/hamming-check/) is available on [pypi](https://pypi.org).
+
+```bash
+sudo pip install hamming_check
+```
+
 ## Command Line Interface
 
 ### Description
