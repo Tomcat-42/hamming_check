@@ -1,5 +1,6 @@
 from enum import Enum
 from math import ceil, log2
+from typing import List
 
 from hamming_check.hamming import DecodeResult, DecodeStatus
 from hamming_check.io import Bytes
@@ -56,7 +57,7 @@ class Hamming(object):
         """
         return self._number_of_output_bytes
 
-    def _get_syndromes(self, hamming_word: Bytes) -> list[Bytes]:
+    def _get_syndromes(self, hamming_word: Bytes) -> List[Bytes]:
         """
         Get the syndromes of a hamming word.
         """
@@ -67,7 +68,7 @@ class Hamming(object):
             ) for i in range(self._number_of_parity_bits)
         ]
 
-    def _get_parity_bits(self, hamming_word: Bytes) -> list[Bytes]:
+    def _get_parity_bits(self, hamming_word: Bytes) -> List[Bytes]:
         """
         Get the syndromes of a hamming word.
         """
@@ -163,7 +164,7 @@ class Hamming(object):
                 f"\tRe-hammified the input bits for checking -> {hamming_word_prime}\n"
                 f"\tExtracted the parity bits from the hamming word -> {hamming_word_parity}\n"
                 f"\tExtracted the parity bits from the re-hammified word -> {hamming_word_prime_parity}\n"
-                f"\tCalculated the syndrome word -> {hamming_word_parity } ^ {hamming_word_prime_parity} -> {syndrome_bits} -> {syndrome}\n",
+                f"\tCalculated the syndrome word -> {hamming_word_parity } ^ {hamming_word_prime_parity} -> {syndrome_bits} -> {syndrome}",
             )
 
         result = DecodeResult()
